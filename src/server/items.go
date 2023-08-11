@@ -9,6 +9,7 @@ import (
 	"github.com/luizmoitinho/bookstore_items_api/src/services"
 	"github.com/luizmoitinho/bookstore_oauth/errors"
 	"github.com/luizmoitinho/bookstore_oauth/oauth"
+	"github.com/luizmoitinho/bookstore_utils/rest_errors"
 )
 
 type Items interface {
@@ -31,6 +32,16 @@ func (handler *itemHandler) Create(c *gin.Context) {
 		c.JSON(err.Status, err)
 		return
 	}
+
+	itemRequest := items.Item{}
+	if err := c.ShouldBindJSON(&itemRequest); err != nil {
+		logger.Error("invalid json body", err)
+		restErr := rest_errors.NewBadRequestError("invalid json body")
+		c.JSON(restErr.Status, restErr)
+		return
+	}
+
+	itemRequest.Seller = oauth.GetCallerId(c.Request)
 
 	accessToken, errCreate := handler.service.Create(items.Item{})
 	if errCreate != nil {
