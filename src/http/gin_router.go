@@ -34,7 +34,7 @@ func (r *router) Run() error {
 func (r *router) Routes() {
 	itemHandler := server.NewItemHandler(services.NewItemService())
 
-	r.engine.DELETE("item/", itemHandler.Create)
-	r.engine.DELETE("item/:id", itemHandler.Get)
+	r.engine.POST("item/", itemHandler.Create)
+	r.engine.GET("item/:id", itemHandler.Get)
 
 }

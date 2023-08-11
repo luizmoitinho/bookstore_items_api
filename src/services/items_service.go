@@ -20,6 +20,9 @@ func (s *service) Create(item items.Item) (*items.Item, *rest_errors.RestError) 
 	return nil, rest_errors.NewBadRequestError("implement me")
 }
 
-func (s *service) Get(item string) (*items.Item, *rest_errors.RestError) {
+func (s *service) Get(id string) (*items.Item, *rest_errors.RestError) {
+	if id != "" {
+		return &items.Item{Id: id}, nil
+	}
 	return nil, rest_errors.NewBadRequestError("implement me")
 }

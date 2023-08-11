@@ -1,10 +1,13 @@
 module github.com/luizmoitinho/bookstore_items_api/src
 
-go 1.18
+go 1.19
 
 require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/joho/godotenv v1.5.1
+	github.com/luizmoitinho/bookstore_oauth v0.0.0-20230303175353-e7b94f78dd89
+	github.com/luizmoitinho/bookstore_utils v1.0.3
+	go.uber.org/zap v1.25.0
 )
 
 require (
@@ -25,9 +28,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
-	go.uber.org/atomic v1.10.0 // indirect
-	go.uber.org/multierr v1.9.0 // indirect
-	go.uber.org/zap v1.24.0 // indirect
+	go.uber.org/multierr v1.10.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/crypto v0.9.0 // indirect
 	golang.org/x/net v0.10.0 // indirect
