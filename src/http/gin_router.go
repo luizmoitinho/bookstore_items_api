@@ -20,7 +20,7 @@ type router struct {
 func NewClient(host string) Client {
 	return &router{
 		host:   host,
-		engine: gin.Default(),
+		engine: gin.New(),
 	}
 }
 
@@ -36,5 +36,6 @@ func (r *router) Routes() {
 
 	r.engine.POST("item/", itemHandler.Create)
 	r.engine.GET("item/:id", itemHandler.Get)
+	r.engine.GET("search/", itemHandler.Search)
 
 }

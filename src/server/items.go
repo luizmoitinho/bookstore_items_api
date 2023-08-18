@@ -13,8 +13,9 @@ import (
 )
 
 type Items interface {
-	Get(*gin.Context)
 	Create(*gin.Context)
+	Search(*gin.Context)
+	Get(c *gin.Context)
 }
 
 type itemHandler struct {
@@ -43,16 +44,29 @@ func (handler *itemHandler) Create(c *gin.Context) {
 
 	itemRequest.Seller = oauth.GetCallerId(c.Request)
 
-	accessToken, errCreate := handler.service.Create(items.Item{})
+	item, errCreate := handler.service.Create(itemRequest)
 	if errCreate != nil {
 		c.JSON(errCreate.Status, errCreate)
+		return
+	}
+
+	c.JSON(http.StatusCreated, item)
+}
+
+func (handler *itemHandler) Get(c *gin.Context) {
+	id := c.Param("id")
+	accessToken, err := handler.service.Get(id)
+	if err != nil {
+		logger.Error("error during get item request", errors.NewError(err.Error))
+		c.JSON(err.Status, err)
 		return
 	}
 	c.JSON(http.StatusCreated, accessToken)
 }
 
-func (handler *itemHandler) Get(c *gin.Context) {
-	accessToken, err := handler.service.Get(c.Param("id"))
+func (handler *itemHandler) Search(c *gin.Context) {
+	searchParam := c.Query("search")
+	accessToken, err := handler.service.Search(searchParam)
 	if err != nil {
 		logger.Error("error during get item request", errors.NewError(err.Error))
 		c.JSON(err.Status, err)
